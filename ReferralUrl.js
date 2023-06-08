@@ -29,25 +29,6 @@ function AppendIframeUrl() {
 }
 
 
-    const referrer = document.referrer;
-    const currentPageUrl = window.location.href;
-
-    iframes.forEach(function (iframe) {
-        const iframeId = iframe.getAttribute("id");
-
-        if (iframeId && (iframeIdsToHandle.includes(iframeId) || iframeIdsToHandle.length === 0)) {
-            const iframeUrl = "https://localhost:44303/WebsiteForms/BookADemoNew";
-            const encodedReferrer = encodeURIComponent(referrer);
-            const encodedCurrentPageUrl = encodeURIComponent(currentPageUrl);
-            const iframeSrc = `${iframeUrl}?referrer=${encodedReferrer}&currentPageUrl=${encodedCurrentPageUrl}`;
-
-            iframe.setAttribute("src", iframeSrc);
-            console.log(`URL for iframe with ID '${iframeId}' set to:`, iframeSrc);
-        }
-    });
-});
-
-
 
 var EmailWebsites = [
     "email",
