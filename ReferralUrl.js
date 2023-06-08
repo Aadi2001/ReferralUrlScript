@@ -1,19 +1,10 @@
 // Script to check that the url original source
 // for hubspot
-const iframeUrls = {
-    signupnew: "https://localhost:44303/WebsiteForms/SignupNew",
-    bookademonew: "https://localhost:44303/WebsiteForms/BookADemoNew",
-    becomeapartner: "https://localhost:44303/WebsiteForms/BecomeAPartnerNew",
-    getquotenew: "https://localhost:44303/WebsiteForms/GetQuoteNew",
-    migratenew: "https://localhost:44303/WebsiteForms/MigrateNew"
-};
-
 function AppendIframeUrl() {
-    const iframeIdsToHandle = Object.keys(iframeUrls);
     const iframes = document.querySelectorAll("iframe");
 
     if (iframes.length === 0) {
-        console.error("No iframes found on the page.");
+        console.log("No iframes found on the page.");
         return;
     }
 
@@ -21,19 +12,22 @@ function AppendIframeUrl() {
     const currentPageUrl = window.location.href;
 
     iframes.forEach(function (iframe) {
-        const iframeId = iframe.getAttribute("id");
+        const iframeSrc = iframe.getAttribute("src");
 
-        if (iframeId && (iframeIdsToHandle.includes(iframeId) || iframeIdsToHandle.length === 0)) {
-            const iframeUrl = iframeUrls[iframeId];
+        if (iframeSrc && iframeSrc.includes("www.google.com")) {
+            const parsedUrl = new URL(iframeSrc);
             const encodedReferrer = encodeURIComponent(referrer);
             const encodedCurrentPageUrl = encodeURIComponent(currentPageUrl);
-            const iframeSrc = `${iframeUrl}?referrer=${encodedReferrer}&currentPageUrl=${encodedCurrentPageUrl}`;
 
-            iframe.setAttribute("src", iframeSrc);
-            console.log(`URL for iframe with ID '${iframeId}' set to:`, iframeSrc);
+            parsedUrl.searchParams.set("referrer", encodedReferrer);
+            parsedUrl.searchParams.set("currentPageUrl", encodedCurrentPageUrl);
+            iframe.setAttribute("src", parsedUrl.toString());
+
+            console.log("URL modified:", parsedUrl.toString());
         }
     });
 }
+
 
     const referrer = document.referrer;
     const currentPageUrl = window.location.href;
