@@ -14,7 +14,7 @@ function AppendIframeUrl() {
     iframes.forEach(function (iframe) {
         const iframeSrc = iframe.getAttribute("src");
 
-        if (iframeSrc && iframeSrc.includes("www.google.com")) {
+        if (iframeSrc && iframeSrc.includes("app.konnectinsights.com")) {
             const parsedUrl = new URL(iframeSrc);
             const encodedReferrer = encodeURIComponent(referrer);
             const encodedCurrentPageUrl = encodeURIComponent(currentPageUrl);
