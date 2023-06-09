@@ -19,8 +19,11 @@ function AppendIframeUrl() {
             const encodedReferrer = encodeURIComponent(referrer);
             const encodedCurrentPageUrl = encodeURIComponent(currentPageUrl);
 
-            parsedUrl.searchParams.set("referrer", encodedReferrer);
-            parsedUrl.searchParams.set("currentPageUrl", encodedCurrentPageUrl);
+            if (parsedUrl.search) {
+                parsedUrl.search += `&referrer=${encodedReferrer}&currentPageUrl=${encodedCurrentPageUrl}`;
+            } else {
+                parsedUrl.search = `referrer=${encodedReferrer}&currentPageUrl=${encodedCurrentPageUrl}`;
+            }
             iframe.setAttribute("src", parsedUrl.toString());
 
             console.log("URL modified:", parsedUrl.toString());
